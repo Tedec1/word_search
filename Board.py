@@ -4,14 +4,14 @@ class Cell(pygame.sprite.Sprite):
     """sprite to hold rect and text objects"""
 
     #constructor
-    def __init__(self, y, x, rows, cols, surface ):
+    def __init__(self, x, y, rows, cols, surface ):
         
         #calls the parent constructor
         pygame.sprite.Sprite.__init__(self)
         
         #set the coords of the cell
-        self.x = 0
-        self.y = 0
+        self.x = x
+        self.y = y
 
         #set the text of the cell
         self.text = " "        
@@ -21,7 +21,24 @@ class Cell(pygame.sprite.Sprite):
         h = surface.get_height()
         self.cols = cols
         self.rows = rows
-        self.rectangle = pygame.Rect((w / cols) * x, (h / rows) * y, w / cols, h / rows)
+        
+        #print(x)
+        #print(y)
+        #print(rows)
+        #print(cols)
+        #print(surface)
+        
+        left = int((w / cols) * x)
+        top = int((h / rows) * y)
+        width = int( w / cols)
+        height = int( h / rows)
+        
+        #print("left: ",left)
+        #print("top: ",top)
+        #print("width: ", width)
+        #print("height: ", height)
+        
+        self.rectangle = pygame.Rect( left, top, width,height)
         #self.rectangle.fill(0,0,0)
         
     def draw(self, surface):
@@ -34,13 +51,18 @@ class Cell(pygame.sprite.Sprite):
 class Board:
     """a class that handles the grid"""
     def __init__(self, r, c, surface):
+        self.draw_group = []
         self.cols = c
         self.rows = r
         self.grid = [[None] * self.cols] * self.rows
 
         for i in range(len(self.grid)):
+            #print("i: ",i)
             for j in range(len(self.grid[i])):
-               self.grid[i][j] = Cell(i , j, r, c, surface)
+                #print("j: ",j)
+                temp = Cell( i, j, r, c, surface)
+                self.grid[i][j] = c
+                self.draw_group.append(c)
     def getCell(self,r,c):
         r = int(r)
         c = int(c)

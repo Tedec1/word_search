@@ -23,21 +23,24 @@ def main():
         for event in pygame.event.get():
             if(event.type == pygame.QUIT):
                 running = False
-        draw_grid(screen, b.grid)
+        draw_grid(screen, b)
     pygame.quit()
 
 def init_pygame(w,h):
     pygame.init()
     return pygame.display.set_mode([w,h])
     
-def draw_grid(screen, grid):
-    screen.unlock()
-    for col in range(len(grid)):
-        for row in range(len(grid[col])):
-            grid[row][col].draw(screen)
-            grid[row][col].print()
-    screen.lock()
-    
+def draw_grid(screen, b):
+    #screen.unlock()
+    for drawable in b.draw_group:
+       pygame.draw.rect(screen, (255,255,255), drawable.rectangle)
+    #drawable.draw(screen)
+    #for col in range(len(grid)):
+    #    for row in range(len(grid[col])):
+    #        grid[row][col].draw(screen)
+    #        grid[row][col].print()
+    #screen.lock()
+    return;
 
 
 
